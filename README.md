@@ -22,9 +22,22 @@ git clone https://github.com/yashbhatt1304/simple-html-docker.git
 ```
 * Navigate to the simple-html-docker folder and build docker image.
 ```
-docket build -t simple-html-docker:latest .
+docker build -t simple-html-docker:latest .
 ```
 * Run the docker image.
 ```
 docker run -p 81:80 simple-html-docker:latest
 ```
+* Navigat to Elastic Cloud Registry and create a new public repository with your choice of name.
+* Configure your amazon access key and access id by running the following command in EC2 instance.
+```
+aws configure
+```
+* Run the below commands to push the image to ECR registry.
+```
+aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/f8g8h5d4
+docker build -t ecr-simple-docker-yash .
+docker tag ecr-simple-docker-yash:latest public.ecr.aws/f8g8h5d4/ecr-simple-docker-yash:latest
+docker push public.ecr.aws/f8g8h5d4/ecr-simple-docker-yash:latest
+```
+* You can see the image is pushed to the repository.
